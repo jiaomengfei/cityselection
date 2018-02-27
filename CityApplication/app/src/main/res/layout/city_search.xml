@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:paddingTop="8dp"
+    android:orientation="horizontal"
     android:paddingBottom="8dp"
     android:background="@color/color_blue_0888ff">
     <TextView
@@ -12,35 +13,29 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="12dp"
         android:text="取消"
         android:textSize="16sp"
         android:textColor="#ffffff"/>
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="34dp"
         android:layout_weight="1"
-        android:layout_marginLeft="8dp"
+        android:layout_height="34dp"
         android:layout_marginRight="16dp"
         android:focusable="true"
+        android:layout_marginLeft="8dp"
+        android:orientation="horizontal"
         android:focusableInTouchMode="true"
         android:background="@drawable/city_search_box_bg">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:padding="8dp"
-            android:scaleType="center"
-            tools:ignore="ContentDescription" />
 
         <EditText
             android:id="@+id/et_search"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
             android:gravity="center_vertical"
-
+            android:paddingLeft="8dp"
             android:hint="城市名"
             android:textColorHint="#8c8c8c"
             android:maxLines="1"
@@ -48,17 +43,16 @@
             android:textColor="#8c8c8c"
             android:textSize="15sp"
             />
-
-        <ImageView
-            android:id="@+id/iv_search_clear"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:src="@mipmap/cp_ic_search_clear"
-            android:visibility="gone"
-            tools:ignore="ContentDescription" />
     </LinearLayout>
-
+    <TextView
+        android:id="@+id/tv_search_cancel_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingRight="16dp"
+        android:text="取消"
+        android:visibility="gone"
+        android:textSize="16sp"
+        android:textColor="#ffffff"/>
 
 </LinearLayout>

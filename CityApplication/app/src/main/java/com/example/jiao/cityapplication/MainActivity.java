@@ -1,5 +1,6 @@
 package com.example.jiao.cityapplication;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int prepareShowPosition = 0;
     private FrameLayout mCover;
     private EditText mEtSearch;
+    private TextView mCancel;
+    private TextView mCancelRight;
 
     public int prepareToShowPosition() {
         return prepareShowPosition;
@@ -39,11 +43,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         initView();
+
         initFragment();
     }
 
-    private void initView() {
+    private void startAnimator() {
+        float curTranslationX =mEtSearch.getTranslationX();
+        ObjectAnimator animator=ObjectAnimator.ofFloat(mEtSearch,"translationX", curTranslationX, 0f);
+        animator.setDuration(3000).start();
+    }
 
+    private void initView() {
+        mCancel = (TextView) findViewById(R.id.tv_search_cancel);
+        mCancelRight = (TextView) findViewById(R.id.tv_search_cancel_right);
         mTab = (TabLayout) findViewById(R.id.city_search_tab);
         LinearLayout linearLayout = (LinearLayout) mTab.getChildAt(0);
         linearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
@@ -53,14 +65,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mEtSearch = (EditText) findViewById(R.id.et_search);
         mCover = (FrameLayout) findViewById(R.id.cover);
         mCover.setOnClickListener(this);
+        mCancel.setOnClickListener(this);
+        mCancelRight.setOnClickListener(this);
         mEtSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
+                    mCancel.setVisibility(View.GONE);
+                    mCancelRight.setVisibility(View.VISIBLE);
                     mCover.setVisibility(View.VISIBLE);
                     InputMethodManager imm = (InputMethodManager) MainActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
                 }else{
+                    mCancel.setVisibility(View.VISIBLE);
+                    mCancelRight.setVisibility(View.GONE);
                     mCover.setVisibility(View.GONE);
                     InputMethodManager imm = ( InputMethodManager ) MainActivity.this.getSystemService( Context.INPUT_METHOD_SERVICE );
                     if ( imm.isActive( ) ) {
@@ -115,6 +133,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     imm.hideSoftInputFromWindow( v.getApplicationWindowToken( ) , 0 );
 
                 }
+                break;
+            case R.id.tv_search_cancel:
+                finish();
+                break;
+            case R.id.tv_search_cancel_right:
+                mEtSearch.clearFocus();
                 break;
         }
     }
