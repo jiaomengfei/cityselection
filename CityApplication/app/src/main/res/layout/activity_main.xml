@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    tools:context=".MainActivity">
+
+    <include layout="@layout/city_search"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/city_search_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+  ></android.support.design.widget.TabLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#F3F3F3"></View>
+
+
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.example.jiao.cityapplication.NoScrollViewPager
+        android:id="@+id/city_search_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></com.example.jiao.cityapplication.NoScrollViewPager>
+    <FrameLayout
+        android:id="@+id/cover"
+        android:background="#66000000"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</RelativeLayout>
+</LinearLayout>

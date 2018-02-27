@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <!--tab选中-->
+    <color name="tabs_text_select">#1F71B1</color>
+    <color name="tabs_text_clolor">#005DA4</color>
+    <!--tab未选中-->
+    <color name="tabs_text">#5D5F6A</color>
+    <color name="partTranslucent">#39000000</color>
+    <color name="cp_gray">#8c8c8c</color>
+    <color name="cp_gray_deep">#5c5c5c</color>
+    <color name="cp_alpha_gray">#CC646464</color>
+    <color name="cp_theme_gray">#646464</color>
+    <color name="color_blue_0888ff">#0888ff</color>
+</resources>
