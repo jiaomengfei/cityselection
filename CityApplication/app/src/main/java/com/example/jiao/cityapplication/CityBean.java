@@ -3,7 +3,9 @@ package com.example.jiao.cityapplication;
 
 import com.example.jiao.cityapplication.IndexBar.BaseIndexPinyinBean;
 
-public class CityBean extends BaseIndexPinyinBean {
+import java.io.Serializable;
+
+public class CityBean extends BaseIndexPinyinBean implements Serializable{
     private String city;//城市名字
 
     @Override

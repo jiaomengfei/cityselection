@@ -1,8 +1,11 @@
 package com.example.jiao.cityapplication;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -18,6 +21,9 @@ import android.widget.TextView;
 import com.example.jiao.cityapplication.IndexBar.BaseIndexPinyinBean;
 import com.example.jiao.cityapplication.IndexBar.IndexBar;
 import com.example.jiao.cityapplication.IndexBar.SuspensionDecoration;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,7 +50,37 @@ public class ChinessCityFragment extends Fragment {
     private SuspensionDecoration mDecoration;
     private FrameLayout mCover;
     private LinkedList<String> mHistoryCity;
+    private static final int LOAD_SUCCESS = 0x0002;
+    private ArrayList<CityJsonBean> arrayList;
 
+    static class MyHandler extends Handler {
+        private final WeakReference<ChinessCityFragment> reference;
+
+        public MyHandler(ChinessCityFragment cityFragment) {
+            reference = new WeakReference<>(cityFragment);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            int what = msg.what;
+            switch (what) {
+                case 111:
+                    ArrayList<CityJsonBean> data = (ArrayList<CityJsonBean>) msg.obj;
+                    ChinessCityFragment cityFragment = reference.get();
+                    if (cityFragment != null) {
+                        cityFragment.initDatas(data);
+                    }
+                    break;
+            }
+        }
+    }
+
+    private MyHandler myHandler;
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        myHandler = new MyHandler(this);
+    }
     public ChinessCityFragment() {
     }
 
@@ -76,18 +112,25 @@ public class ChinessCityFragment extends Fragment {
         getDatas();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
 
-    }
 
     private void getDatas() {
-       String cityDatas=ReadFromAssets.ReadJsonFile("china.json",getActivity());
-        ArrayList<CityJsonBean> arrayList=  DataUtil.jsonToArrayList(cityDatas,CityJsonBean.class);
-       // Bundle bundle = getArguments();
-       // ArrayList<CityJsonBean> arrayList= (ArrayList<CityJsonBean>) bundle.getSerializable("city_data");
-        initDatas(arrayList);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String cityDatas=ReadFromAssets.ReadJsonFile("china.json",getActivity());
+                TypeToken<ArrayList<CityJsonBean>> type = new TypeToken<ArrayList<CityJsonBean>>() {
+                };
+                arrayList = DataUtil.jsonToArrayList(cityDatas,type);
+
+                Message msg = Message.obtain();
+                msg.obj = arrayList;
+                msg.what = 111;
+                myHandler.handleMessage(msg);
+
+            }
+        }).start();
+
     }
 
 
@@ -130,10 +173,6 @@ public class ChinessCityFragment extends Fragment {
             }
         };
         mHeaderAdapter.setHeaderView(0,R.layout.meituan_item_header,mHeaderDatas.get(0));
-       // mHeaderAdapter.setHeaderView(0, R.layout.meituan_item_header_top, new MeituanTopHeaderBean("当前：上海徐汇"));
-//        mHeaderAdapter.setHeaderView(0, R.layout.meituan_item_header, mHeaderDatas.get(0));
-//        mHeaderAdapter.setHeaderView(1, R.layout.meituan_item_header, mHeaderDatas.get(1));
-//        mHeaderAdapter.setHeaderView(2, R.layout.meituan_item_header, mHeaderDatas.get(2));
         mRv.setAdapter(mHeaderAdapter);
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -191,7 +230,7 @@ public class ChinessCityFragment extends Fragment {
                 }
                 //先排序
                 mIndexBar.getDataHelper().sortSourceDatas(mBodyDatas);
-
+                //只能使用List的子类
                 mAdapter.setDatas(mBodyDatas);
                 mHeaderAdapter.notifyDataSetChanged();
                 mSourceDatas.addAll(mBodyDatas);

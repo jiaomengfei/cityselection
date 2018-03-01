@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
-
+    apply plugin: 'realm-android'
     defaultConfig {
         applicationId "com.example.jiao.cityapplication"
         minSdkVersion 16

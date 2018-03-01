@@ -1,55 +1,57 @@
 package com.example.jiao.cityapplication;
 
-import android.os.Parcelable;
-
 import java.io.Serializable;
 
-import io.realm.Realm;
 import io.realm.RealmObject;
 
 /**
- * Created by jiao3 on 2018/2/26.
+ * Created by jiao3 on 2018/3/1.
  */
 
-public class CityJsonBean  implements Serializable{
-    private int id;
-    private int code;
+public class ZBeanCity extends RealmObject implements Serializable{
 
-    @Override
-    public String toString() {
-        return "CityJsonBean{" +
-                "id=" + id +
-                ", code=" + code +
-                ", parent=" + parent +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", latitude='" + latitude + '\'' +
-                ", longitude='" + longitude + '\'' +
-                ", deltime='" + deltime + '\'' +
-                '}';
-    }
 
-    public int getId() {
+    /**
+     * id : 1
+     * code : 10000
+     * parent : 0
+     * name : 中国
+     * type : 0
+     * latitude :
+     * longitude :
+     * deltime : 0
+     */
+
+    private String id;
+    private String code;
+    private String parent;
+    private String name;
+    private String type;
+    private String latitude;
+    private String longitude;
+    private String deltime;
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
-    public int getParent() {
+    public String getParent() {
         return parent;
     }
 
-    public void setParent(int parent) {
+    public void setParent(String parent) {
         this.parent = parent;
     }
 
@@ -92,12 +94,4 @@ public class CityJsonBean  implements Serializable{
     public void setDeltime(String deltime) {
         this.deltime = deltime;
     }
-
-    private int parent;
-    private String  name;
-    private String type;
-    private String latitude;
-    private String longitude;
-    private String deltime;
-
 }

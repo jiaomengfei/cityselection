@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
@@ -52,5 +53,12 @@ public class DataUtil {
             arrayList.add(gson.fromJson(jsonObject, clazz));
         }
         return arrayList;
+    }
+
+
+    public static <T> T jsonToArrayList(String json, TypeToken<T> type) {
+        Gson gson = new GsonBuilder().create();
+        T result = gson.fromJson(json, type.getType());
+        return result;
     }
 }
