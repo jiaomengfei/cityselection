@@ -1,6 +1,7 @@
 package com.example.jiao.cityapplication;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,19 +14,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.jiao.cityapplication.IndexBar.BaseIndexPinyinBean;
 import com.example.jiao.cityapplication.IndexBar.IndexBar;
 import com.example.jiao.cityapplication.IndexBar.SuspensionDecoration;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+import static com.example.jiao.cityapplication.MainActivity.KEY_PICKED_CITY;
 
 
 public class ChinessCityFragment extends Fragment {
@@ -40,11 +38,12 @@ public class ChinessCityFragment extends Fragment {
     //主体部分数据源（城市数据）
     private List<CityBean> mBodyDatas;
     //头部数据源
-    private List<MeituanHeaderBean> mHeaderDatas;
+    private List<CityHeaderBean> mHeaderDatas;
     //设置给InexBar、ItemDecoration的完整数据集
     private List<BaseIndexPinyinBean> mSourceDatas;
     private SuspensionDecoration mDecoration;
     private FrameLayout mCover;
+    private LinkedList<String> mHistoryCity;
 
     public ChinessCityFragment() {
     }
@@ -52,43 +51,46 @@ public class ChinessCityFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initData();
+    }
+
+    private void initData() {
         mSourceDatas = new ArrayList<>();
         mHeaderDatas = new ArrayList<>();
-        List<String> locationCity = new ArrayList<>();
-        locationCity.add("定位中");
-        locationCity.add("乌鲁木齐");
-        locationCity.add("上海");
-        locationCity.add("天津");
-        mHeaderDatas.add(new MeituanHeaderBean(locationCity, "历史", "历史"));
-//        List<String> recentCitys = new ArrayList<>();
-//        mHeaderDatas.add(new MeituanHeaderBean(recentCitys, "最近访问城市", "近"));
-//        List<String> hotCitys = new ArrayList<>();
-//        mHeaderDatas.add(new MeituanHeaderBean(hotCitys, "热门城市", "热"));
+        mHistoryCity = new LinkedList<>();
+
+        LinkedList<String> hCitys = new LinkedList<>();
+        LinkedList<String> citys=DataUtil.getHistoryCityName(getActivity(),"china_history_nums","china_item");
+        mHistoryCity.add("北京");
+
+        if (citys.size()>3){
+            for(int i=0;i<3;i++){
+                hCitys.add(citys.get(i));
+            }
+            mHistoryCity.addAll(hCitys);
+        }else{
+            mHistoryCity.addAll(citys);
+        }
+        mHeaderDatas.add(new CityHeaderBean(mHistoryCity, "历史", "历史"));
         mSourceDatas.addAll(mHeaderDatas);
         getDatas();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
     }
 
     private void getDatas() {
-        String cityDatas=ReadFromAssets.ReadJsonFile("city.json",getActivity());
-        Gson gson=new Gson();
-        ArrayList<CityJsonBean> arrayList= (ArrayList) jsonToArrayList(cityDatas,CityJsonBean.class);
+       String cityDatas=ReadFromAssets.ReadJsonFile("china.json",getActivity());
+        ArrayList<CityJsonBean> arrayList=  DataUtil.jsonToArrayList(cityDatas,CityJsonBean.class);
+       // Bundle bundle = getArguments();
+       // ArrayList<CityJsonBean> arrayList= (ArrayList<CityJsonBean>) bundle.getSerializable("city_data");
         initDatas(arrayList);
     }
 
-    public static <T> ArrayList<T> jsonToArrayList(String json, Class<T> clazz)
-    {
-        Type type = new TypeToken<ArrayList<JsonObject>>()
-        {}.getType();
-        ArrayList<JsonObject> jsonObjects = new Gson().fromJson(json, type);
 
-        ArrayList<T> arrayList = new ArrayList<>();
-        for (JsonObject jsonObject : jsonObjects)
-        {
-            arrayList.add(new Gson().fromJson(jsonObject, clazz));
-        }
-        return arrayList;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -104,7 +106,7 @@ public class ChinessCityFragment extends Fragment {
             protected void onBindHeaderHolder(ViewHolder holder, int headerPos, int layoutId, Object o) {
                 switch (layoutId) {
                     case R.layout.meituan_item_header:
-                        final MeituanHeaderBean meituanHeaderBean = (MeituanHeaderBean) o;
+                        final CityHeaderBean meituanHeaderBean = (CityHeaderBean) o;
                         //网格
                         RecyclerView recyclerView = holder.getView(R.id.rvCity);
                         recyclerView.setAdapter(
@@ -115,17 +117,13 @@ public class ChinessCityFragment extends Fragment {
                                         holder.getConvertView().setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                                                Toast.makeText(mContext, "cityName:" + cityName, Toast.LENGTH_SHORT).show();
+                                                backWithData(cityName);
                                             }
                                         });
                                     }
                                 });
                         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
                         break;
-//                    case R.layout.meituan_item_header_top:
-//                        MeituanTopHeaderBean meituanTopHeaderBean = (MeituanTopHeaderBean) o;
-//                        holder.setText(R.id.tvCurrent, meituanTopHeaderBean.getTxt());
-//                        break;
                     default:
                         break;
                 }
@@ -140,7 +138,10 @@ public class ChinessCityFragment extends Fragment {
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(ViewGroup parent, View view, Object o, int position) {
-                Toast.makeText(getActivity(), "pos:" + mBodyDatas.get(position), Toast.LENGTH_SHORT).show();
+                backWithData(mBodyDatas.get(position).getCity());
+                mHistoryCity.add(1,mBodyDatas.get(position).getCity());
+                mHistoryCity.remove(0);
+                DataUtil.updateHistoryCityName(getActivity(),mHistoryCity,"china_history_nums","china_item");
             }
 
             @Override
@@ -162,6 +163,13 @@ public class ChinessCityFragment extends Fragment {
                  .setmLayoutManager(mManager)//设置RecyclerView的LayoutManager
                  .setHeaderViewCount(mHeaderAdapter.getHeaderViewCount() - mHeaderDatas.size());
         return view;
+    }
+
+    private void backWithData(String city){
+        Intent data = new Intent();
+        data.putExtra(KEY_PICKED_CITY, city);
+        getActivity().setResult(RESULT_OK, data);
+        getActivity().finish();
     }
 
     /**
@@ -193,33 +201,6 @@ public class ChinessCityFragment extends Fragment {
                 mDecoration.setmDatas(mSourceDatas);
             }
         }, 1);
-
-        //延迟两秒加载头部
-//        getActivity().getWindow().getDecorView().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                MeituanHeaderBean header1 = mHeaderDatas.get(0);
-//                header1.getCityList().clear();
-//                header1.getCityList().add("上海");
-//
-//                MeituanHeaderBean header2 = mHeaderDatas.get(1);
-//                List<String> recentCitys = new ArrayList<>();
-//                recentCitys.add("日本");
-//                recentCitys.add("北京");
-//                header2.setCityList(recentCitys);
-//
-//                MeituanHeaderBean header3 = mHeaderDatas.get(2);
-//                List<String> hotCitys = new ArrayList<>();
-//                hotCitys.add("上海");
-//                hotCitys.add("北京");
-//                hotCitys.add("杭州");
-//                hotCitys.add("广州");
-//                header3.setCityList(hotCitys);
-//
-//                mHeaderAdapter.notifyItemRangeChanged(1, 3);
-//
-//            }
-//        }, 2000);
 
     }
 

@@ -1,7 +1,7 @@
 package com.example.jiao.cityapplication;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText mEtSearch;
     private TextView mCancel;
     private TextView mCancelRight;
+    public static final String KEY_PICKED_CITY = "picked_city";
+    private ArrayList<CityJsonBean> arrayList;
 
     public int prepareToShowPosition() {
         return prepareShowPosition;
@@ -43,15 +45,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         initView();
-
+//        Intent intent =getIntent();
+//        Bundle bundle=intent.getExtras();
+//        arrayList = (ArrayList<CityJsonBean>) bundle.getSerializable("cityData");
         initFragment();
     }
 
-    private void startAnimator() {
-        float curTranslationX =mEtSearch.getTranslationX();
-        ObjectAnimator animator=ObjectAnimator.ofFloat(mEtSearch,"translationX", curTranslationX, 0f);
-        animator.setDuration(3000).start();
-    }
+
 
     private void initView() {
         mCancel = (TextView) findViewById(R.id.tv_search_cancel);
@@ -96,6 +96,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mInternationalCityFragment=new InternationalCityFragment();
         mFragments.add(mChinessCityFragment);
         mFragments.add(mInternationalCityFragment);
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable("city_data",arrayList);
+      //  mChinessCityFragment.setArguments(bundle);
         mTitles = new ArrayList<>();
         mTitles.add("国内");
         mTitles.add("国际");

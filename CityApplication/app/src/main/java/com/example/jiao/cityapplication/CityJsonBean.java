@@ -1,13 +1,17 @@
 package com.example.jiao.cityapplication;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 /**
  * Created by jiao3 on 2018/2/26.
  */
 
-public class CityJsonBean {
+public class CityJsonBean implements Serializable{
     private String id;
     private String code;
-    private String  parent;
+    private int parent;
     private String  name;
 
     @Override
@@ -39,11 +43,11 @@ public class CityJsonBean {
         this.code = code;
     }
 
-    public String getParent() {
+    public int getParent() {
         return parent;
     }
 
-    public void setParent(String parent) {
+    public void setParent(int parent) {
         this.parent = parent;
     }
 
