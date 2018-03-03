@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mViewPager= (ViewPager) findViewById(R.id.city_search_vp);
         mEtSearch = (EditText) findViewById(R.id.et_search);
         mCover = (FrameLayout) findViewById(R.id.cover);
-        mSearchTop = (LinearLayout) findViewById(R.id.search_top);
+        mSearchTop = (LinearLayout) findViewById(R.id.search_title);
         mSearchPopupwindow=new SearchPopupwindow(this,mHandler);
         mCover.setOnClickListener(this);
         mCancel.setOnClickListener(this);
@@ -106,12 +106,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                mCover.setVisibility(View.GONE);
                 if(null==mSearchPopupwindow){
                     return;
                 }
                 if(mSearchPopupwindow.isShowing()){
-                    mSearchPopupwindow.dismiss();
+                    //mSearchPopupwindow.dismiss();
                 }else{
                     mSearchPopupwindow.showAsDropDown(mSearchTop);
                     InputMethodManager imm = (InputMethodManager) MainActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -156,10 +156,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.tv_search_cancel:
+                mEtSearch.getText().clear();
                 finish();
                 break;
             case R.id.tv_search_cancel_right:
+                mEtSearch.getText().clear();
                 mEtSearch.clearFocus();
+                if (null != mSearchPopupwindow) {
+                    mSearchPopupwindow.dismiss();
+                    mSearchPopupwindow = null;
+                }
                 break;
         }
     }
@@ -169,7 +175,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onDestroy();
         if (null != mSearchPopupwindow) {
             mSearchPopupwindow.dismiss();
-            mSearchPopupwindow = null;
         }
     }
 }

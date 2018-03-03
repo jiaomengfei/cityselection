@@ -1,6 +1,7 @@
 package com.example.jiao.cityapplication;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +30,10 @@ public class SearchPopupwindow extends PopupWindow {
         this.setHeight(LayoutParams.MATCH_PARENT);
         this.setContentView(view);
         mExpandableLV = view.findViewById(R.id.search_expandlv);
+        this.setOutsideTouchable(true);
         this.setFocusable(false);
+        ColorDrawable dw = new ColorDrawable(0x90000000);
+        this.setBackgroundDrawable(dw);
     }
 
     @Override

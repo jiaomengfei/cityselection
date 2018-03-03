@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:paddingTop="8dp"
+    android:id="@+id/search_title"
     android:orientation="horizontal"
     android:paddingBottom="8dp"
     android:background="@color/color_blue_0888ff">
