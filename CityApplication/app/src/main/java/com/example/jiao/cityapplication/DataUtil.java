@@ -55,6 +55,19 @@ public class DataUtil {
         return arrayList;
     }
 
+    public static void setDatabaseConfig(Context paramContext,Boolean is){
+        SharedPreferences sharedPreferences = paramContext.getSharedPreferences("historyCityList", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("databaseConfig",is);
+        editor.commit();
+    }
+
+    public static Boolean getDatabaseConfig(Context paramContext){
+        SharedPreferences sharedPreferences = paramContext.getSharedPreferences("historyCityList", Context.MODE_PRIVATE);
+        Boolean is=sharedPreferences.getBoolean("databaseConfig",false);
+        return is;
+    }
+
 
     public static <T> T jsonToArrayList(String json, TypeToken<T> type) {
         Gson gson = new GsonBuilder().create();

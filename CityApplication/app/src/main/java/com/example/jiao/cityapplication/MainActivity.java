@@ -3,11 +3,15 @@ package com.example.jiao.cityapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.TabLayout;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -34,10 +38,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mCancelRight;
     public static final String KEY_PICKED_CITY = "picked_city";
     private ArrayList<CityJsonBean> arrayList;
-
-    public int prepareToShowPosition() {
-        return prepareShowPosition;
-    }
+    private LinearLayout mSearchTop;
+    private SearchPopupwindow mSearchPopupwindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initFragment();
     }
 
-
+    private Handler mHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+        }
+    };
 
     private void initView() {
         mCancel = (TextView) findViewById(R.id.tv_search_cancel);
@@ -64,6 +71,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mViewPager= (ViewPager) findViewById(R.id.city_search_vp);
         mEtSearch = (EditText) findViewById(R.id.et_search);
         mCover = (FrameLayout) findViewById(R.id.cover);
+        mSearchTop = (LinearLayout) findViewById(R.id.search_top);
+        mSearchPopupwindow=new SearchPopupwindow(this,mHandler);
         mCover.setOnClickListener(this);
         mCancel.setOnClickListener(this);
         mCancelRight.setOnClickListener(this);
@@ -88,6 +97,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
+
+        mEtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if(null==mSearchPopupwindow){
+                    return;
+                }
+                if(mSearchPopupwindow.isShowing()){
+                    mSearchPopupwindow.dismiss();
+                }else{
+                    mSearchPopupwindow.showAsDropDown(mSearchTop);
+                    InputMethodManager imm = (InputMethodManager) MainActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
     private void initFragment() {
@@ -96,30 +131,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mInternationalCityFragment=new InternationalCityFragment();
         mFragments.add(mChinessCityFragment);
         mFragments.add(mInternationalCityFragment);
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable("city_data",arrayList);
-      //  mChinessCityFragment.setArguments(bundle);
+
         mTitles = new ArrayList<>();
         mTitles.add("国内");
         mTitles.add("国际");
         mAdapter=new CityFragmentAdapter(getSupportFragmentManager(),mFragments,mTitles);
         mViewPager.setAdapter(mAdapter);
-//        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//                prepareShowPosition = position;
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
+
         mTab.setTabTextColors(R.color.tabs_text_clolor
                 ,R.color.colorAccent);
         mTab.setupWithViewPager(mViewPager);
@@ -143,6 +161,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.tv_search_cancel_right:
                 mEtSearch.clearFocus();
                 break;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null != mSearchPopupwindow) {
+            mSearchPopupwindow.dismiss();
+            mSearchPopupwindow = null;
         }
     }
 }

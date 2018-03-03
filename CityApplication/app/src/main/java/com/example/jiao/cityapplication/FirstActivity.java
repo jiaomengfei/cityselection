@@ -43,54 +43,35 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
         mDisplay = (TextView) findViewById(R.id.city_display);
         mButton.setOnClickListener(this);
         mSearch.setOnClickListener(this);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-               // String cityDatas=ReadFromAssets.ReadJsonFile("china.json",FirstActivity.this);
-//                TypeToken<ArrayList<CityJsonBean>> type = new TypeToken<ArrayList<CityJsonBean>>() {
-//                };
+        Boolean is =DataUtil.getDatabaseConfig(this);
+        if(!is){
+            createDatabase();
+        }
 
-//                ZBeanCity zBeanCity=new Gson().fromJson(cityDatas,ZBeanCity.class);
-//                    myRealm.beginTransaction();
-//                    myRealm.copyToRealm(zBeanCity);
-//                    myRealm.commitTransaction();
-//                    myRealm.createObjectFromJson(ZBeanCity.class,cityDatas);
-
-
-
-
-//
-        //mCityList=  DataUtil.jsonToArrayList(cityDatas,CityJsonBean.class);
-
-            }
-        }).start();
-
+    }
+    private void createDatabase() {
         myRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 try {
                     InputStream is = FirstActivity.this.getAssets().open("china.json");
                     realm.createAllFromJson(ZBeanCity.class, is);
+                    DataUtil.setDatabaseConfig(FirstActivity.this,true);
                 } catch (IOException e) {
                     throw new RuntimeException();
                 }
             }
         });
-
-                //mCityList=  DataUtil.jsonToArrayList(cityDatas,CityJsonBean.class);
-        RealmResults<ZBeanCity> userList = myRealm.where(ZBeanCity.class).findAll();
-        Log.e("result",userList.toString());
     }
-
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.city_search:
-                RealmResults<ZBeanCity> pups = myRealm.where(ZBeanCity.class)
-                        .findAll();
-                Log.e("result",pups.toString());
-                break;
-        }
+//        switch (v.getId()){
+//            case R.id.city_search:
+//                RealmResults<ZBeanCity> pups = myRealm.where(ZBeanCity.class)
+//                        .findAll();
+//                Log.e("result",pups.toString());
+//                break;
+//        }
     Intent intent=new Intent(this,MainActivity.class);
         startActivityForResult(intent,
                 REQUEST_CODE_PICK_CITY);

@@ -28,6 +28,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
+
 import static android.app.Activity.RESULT_OK;
 import static com.example.jiao.cityapplication.MainActivity.KEY_PICKED_CITY;
 
@@ -50,36 +54,36 @@ public class ChinessCityFragment extends Fragment {
     private SuspensionDecoration mDecoration;
     private FrameLayout mCover;
     private LinkedList<String> mHistoryCity;
-    private static final int LOAD_SUCCESS = 0x0002;
-    private ArrayList<CityJsonBean> arrayList;
+    private RealmResults<ZBeanCity> mResultList;
+    public Realm myRealm;
 
-    static class MyHandler extends Handler {
-        private final WeakReference<ChinessCityFragment> reference;
-
-        public MyHandler(ChinessCityFragment cityFragment) {
-            reference = new WeakReference<>(cityFragment);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            int what = msg.what;
-            switch (what) {
-                case 111:
-                    ArrayList<CityJsonBean> data = (ArrayList<CityJsonBean>) msg.obj;
-                    ChinessCityFragment cityFragment = reference.get();
-                    if (cityFragment != null) {
-                        cityFragment.initDatas(data);
-                    }
-                    break;
-            }
-        }
-    }
-
-    private MyHandler myHandler;
+//    static class MyHandler extends Handler {
+//        private final WeakReference<ChinessCityFragment> reference;
+//
+//        public MyHandler(ChinessCityFragment cityFragment) {
+//            reference = new WeakReference<>(cityFragment);
+//        }
+//
+//        @Override
+//        public void handleMessage(Message msg) {
+//            int what = msg.what;
+//            switch (what) {
+//                case 111:
+//                    ArrayList<ZBeanCity> data = (ArrayList<ZBeanCity>) msg.obj;
+//                    ChinessCityFragment cityFragment = reference.get();
+//                    if (cityFragment != null) {
+//                        cityFragment.initDatas(data);
+//                    }
+//                    break;
+//            }
+//        }
+//    }
+//
+//    private MyHandler myHandler;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        myHandler = new MyHandler(this);
+        //myHandler = new MyHandler(this);
     }
     public ChinessCityFragment() {
     }
@@ -87,6 +91,7 @@ public class ChinessCityFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        myRealm = Realm.getDefaultInstance();
         initData();
     }
 
@@ -115,21 +120,15 @@ public class ChinessCityFragment extends Fragment {
 
 
     private void getDatas() {
-        new Thread(new Runnable() {
+        mResultList = myRealm.where(ZBeanCity.class).findAllAsync();
+        mResultList.addChangeListener(new RealmChangeListener<RealmResults<ZBeanCity>>() {
             @Override
-            public void run() {
-                String cityDatas=ReadFromAssets.ReadJsonFile("china.json",getActivity());
-                TypeToken<ArrayList<CityJsonBean>> type = new TypeToken<ArrayList<CityJsonBean>>() {
-                };
-                arrayList = DataUtil.jsonToArrayList(cityDatas,type);
-
-                Message msg = Message.obtain();
-                msg.obj = arrayList;
-                msg.what = 111;
-                myHandler.handleMessage(msg);
-
+            public void onChange(RealmResults<ZBeanCity> element) {
+                element= element.sort("id");
+                List<ZBeanCity> datas=  myRealm.copyFromRealm(element);
+                initDatas(datas);
             }
-        }).start();
+        });
 
     }
 
@@ -217,7 +216,7 @@ public class ChinessCityFragment extends Fragment {
      * @param data
      * @return
      */
-    private void initDatas(final ArrayList<CityJsonBean> data) {
+    private void initDatas(final List<ZBeanCity> data) {
         //延迟两秒 模拟加载数据中....
         getActivity().getWindow().getDecorView().postDelayed(new Runnable() {
             @Override
