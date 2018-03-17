@@ -1,4 +1,4 @@
-package com.example.jiao.cityapplication;
+package com.example.jiao.cityapplication.view;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
@@ -9,21 +9,22 @@ import android.widget.ExpandableListView;
 import android.widget.PopupWindow;
 import android.widget.RadioGroup.LayoutParams;
 
+import com.example.jiao.cityapplication.R;
+
 /**
  * Created by jmf on 2018/3/2.
  */
 
-public class SearchPopupwindow extends PopupWindow {
+public class CoverPopupwindow extends PopupWindow {
 
     private Handler mHandler;
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private final ExpandableListView mExpandableLV;
 
-    public SearchPopupwindow(Context mContext , Handler mHandler) {
+    public CoverPopupwindow(Context mContext) {
         super();
         this.mContext=mContext;
-        this.mHandler=mHandler;
         this.mLayoutInflater = LayoutInflater.from(mContext);
         View view = mLayoutInflater.inflate(R.layout.city_result_popup, null);
         this.setWidth(LayoutParams.MATCH_PARENT);

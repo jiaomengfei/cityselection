@@ -1,4 +1,4 @@
-package com.example.jiao.cityapplication;
+package com.example.jiao.cityapplication.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

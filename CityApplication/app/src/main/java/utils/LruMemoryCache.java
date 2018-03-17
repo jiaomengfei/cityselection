@@ -1,8 +1,8 @@
-package com.example.jiao.cityapplication;
+package utils;
 
-import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
-import android.util.Log;
+
+import com.example.jiao.cityapplication.bean.CityBean;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  * Created by jiao3 on 2018/3/1.
  */
 
-public class LruMemoryCache implements MemoryCache{
+public class LruMemoryCache implements MemoryCache {
 
     private static LruMemoryCache mInstance;
     private LruCache<String, List<CityBean>> mLruCityCache;

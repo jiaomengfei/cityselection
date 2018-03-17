@@ -10,13 +10,13 @@
         android:name=".MyApplication"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:screenOrientation="portrait"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"></activity>
         <activity
-            android:name=".FirstActivity"
+            android:name=".activity.FirstActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>

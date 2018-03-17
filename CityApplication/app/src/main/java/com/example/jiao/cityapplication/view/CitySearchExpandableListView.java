@@ -1,4 +1,4 @@
-package com.example.jiao.cityapplication;
+package com.example.jiao.cityapplication.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

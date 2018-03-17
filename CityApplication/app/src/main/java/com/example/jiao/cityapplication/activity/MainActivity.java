@@ -1,7 +1,6 @@
-package com.example.jiao.cityapplication;
+package com.example.jiao.cityapplication.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,7 +19,16 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.jiao.cityapplication.fragment.ChinessCityFragment;
+import com.example.jiao.cityapplication.fragment.InternationalCityFragment;
+import com.example.jiao.cityapplication.R;
+import com.example.jiao.cityapplication.adapter.CityFragmentAdapter;
+import com.example.jiao.cityapplication.bean.CityJsonBean;
+import com.example.jiao.cityapplication.view.SearchPopupwindow;
+
 import java.util.ArrayList;
+
+import utils.DensityUtil;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -39,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String KEY_PICKED_CITY = "picked_city";
     private ArrayList<CityJsonBean> arrayList;
     private LinearLayout mSearchTop;
-    private SearchPopupwindow mSearchPopupwindow;
+ //   private SearchPopupwindow mSearchPopupwindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,29 +80,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mEtSearch = (EditText) findViewById(R.id.et_search);
         mCover = (FrameLayout) findViewById(R.id.cover);
         mSearchTop = (LinearLayout) findViewById(R.id.search_title);
-        mSearchPopupwindow=new SearchPopupwindow(this,mHandler);
+        //mSearchPopupwindow=new SearchPopupwindow(this,mHandler);
         mCover.setOnClickListener(this);
         mCancel.setOnClickListener(this);
         mCancelRight.setOnClickListener(this);
         mEtSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    mCancel.setVisibility(View.GONE);
-                    mCancelRight.setVisibility(View.VISIBLE);
-                    mCover.setVisibility(View.VISIBLE);
-                    InputMethodManager imm = (InputMethodManager) MainActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-                }else{
-                    mCancel.setVisibility(View.VISIBLE);
-                    mCancelRight.setVisibility(View.GONE);
-                    mCover.setVisibility(View.GONE);
-                    InputMethodManager imm = ( InputMethodManager ) MainActivity.this.getSystemService( Context.INPUT_METHOD_SERVICE );
-                    if ( imm.isActive( ) ) {
-                        imm.hideSoftInputFromWindow( v.getApplicationWindowToken( ) , 0 );
-
-                    }
-                }
+//                if(hasFocus){
+//                    mCancel.setVisibility(View.GONE);
+//                    mCancelRight.setVisibility(View.VISIBLE);
+//                    mCover.setVisibility(View.VISIBLE);
+//                    InputMethodManager imm = (InputMethodManager) MainActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+//                    imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+//                }else{
+//                    mCancel.setVisibility(View.VISIBLE);
+//                    mCancelRight.setVisibility(View.GONE);
+//                    mCover.setVisibility(View.GONE);
+//                    InputMethodManager imm = ( InputMethodManager ) MainActivity.this.getSystemService( Context.INPUT_METHOD_SERVICE );
+//                    if ( imm.isActive( ) ) {
+//                        imm.hideSoftInputFromWindow( v.getApplicationWindowToken( ) , 0 );
+//
+//                    }
+               // }
             }
         });
 
@@ -106,17 +114,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mCover.setVisibility(View.GONE);
-                if(null==mSearchPopupwindow){
-                    return;
-                }
-                if(mSearchPopupwindow.isShowing()){
-                    //mSearchPopupwindow.dismiss();
-                }else{
-                    mSearchPopupwindow.showAsDropDown(mSearchTop);
-                    InputMethodManager imm = (InputMethodManager) MainActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-                }
+                //mCover.setVisibility(View.GONE);
+
+//                if(null==mSearchPopupwindow){
+//                    return;
+//                }
+//                if(mSearchPopupwindow.isShowing()){
+//                  //  mSearchPopupwindow.dismiss();
+//                }else{
+//                    mSearchPopupwindow.showAsDropDown(mSearchTop);
+//                    mEtSearch.setFocusable(true);
+//                    InputMethodManager imm = (InputMethodManager) MainActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+//                    imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+//                }
             }
 
             @Override
@@ -162,10 +172,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.tv_search_cancel_right:
                 mEtSearch.getText().clear();
                 mEtSearch.clearFocus();
-                if (null != mSearchPopupwindow) {
-                    mSearchPopupwindow.dismiss();
-                    mSearchPopupwindow = null;
-                }
+//                if (null != mSearchPopupwindow) {
+//                    mSearchPopupwindow.dismiss();
+//                }
                 break;
         }
     }
@@ -173,8 +182,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (null != mSearchPopupwindow) {
-            mSearchPopupwindow.dismiss();
-        }
+//        if (null != mSearchPopupwindow) {
+//            mSearchPopupwindow.dismiss();
+//        }
     }
 }

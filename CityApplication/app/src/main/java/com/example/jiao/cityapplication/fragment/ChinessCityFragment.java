@@ -1,11 +1,9 @@
-package com.example.jiao.cityapplication;
+package com.example.jiao.cityapplication.fragment;
 
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -21,9 +19,17 @@ import android.widget.TextView;
 import com.example.jiao.cityapplication.IndexBar.BaseIndexPinyinBean;
 import com.example.jiao.cityapplication.IndexBar.IndexBar;
 import com.example.jiao.cityapplication.IndexBar.SuspensionDecoration;
-import com.google.gson.reflect.TypeToken;
+import com.example.jiao.cityapplication.adapter.OnItemClickListener;
+import com.example.jiao.cityapplication.R;
+import com.example.jiao.cityapplication.adapter.ViewHolder;
+import com.example.jiao.cityapplication.ZBeanCity;
+import com.example.jiao.cityapplication.adapter.CityAdapter;
+import com.example.jiao.cityapplication.adapter.CommonAdapter;
+import com.example.jiao.cityapplication.bean.CityBean;
+import com.example.jiao.cityapplication.bean.CityHeaderBean;
+import com.example.jiao.cityapplication.view.DividerItemDecoration;
+import com.example.jiao.cityapplication.view.HeaderRecyclerAndFooterWrapperAdapter;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,9 +37,10 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
+import utils.DataUtil;
 
 import static android.app.Activity.RESULT_OK;
-import static com.example.jiao.cityapplication.MainActivity.KEY_PICKED_CITY;
+import static com.example.jiao.cityapplication.activity.MainActivity.KEY_PICKED_CITY;
 
 
 public class ChinessCityFragment extends Fragment {
@@ -101,7 +108,7 @@ public class ChinessCityFragment extends Fragment {
         mHistoryCity = new LinkedList<>();
 
         LinkedList<String> hCitys = new LinkedList<>();
-        LinkedList<String> citys=DataUtil.getHistoryCityName(getActivity(),"china_history_nums","china_item");
+        LinkedList<String> citys= DataUtil.getHistoryCityName(getActivity(),"china_history_nums","china_item");
         mHistoryCity.add("北京");
 
         if (citys.size()>3){

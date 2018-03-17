@@ -1,4 +1,4 @@
-package com.example.jiao.cityapplication;
+package com.example.jiao.cityapplication.adapter;
 
 import android.view.View;
 import android.view.ViewGroup;

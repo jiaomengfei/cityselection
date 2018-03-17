@@ -1,6 +1,9 @@
-package com.example.jiao.cityapplication;
+package com.example.jiao.cityapplication.adapter;
 
 import android.content.Context;
+
+import com.example.jiao.cityapplication.R;
+import com.example.jiao.cityapplication.bean.CityBean;
 
 import java.util.List;
 

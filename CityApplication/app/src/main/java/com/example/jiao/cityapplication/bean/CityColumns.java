@@ -1,4 +1,4 @@
-package com.example.jiao.cityapplication;
+package com.example.jiao.cityapplication.bean;
 
 /**
  * Created by jiao3 on 2018/3/1.

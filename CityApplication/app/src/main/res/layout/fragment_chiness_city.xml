@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.jiao.cityapplication.ChinessCityFragment">
+    tools:context="com.example.jiao.cityapplication.fragment.ChinessCityFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv"
@@ -13,24 +13,6 @@
 
     </android.support.v7.widget.RecyclerView>
 
-    <!--<TextView-->
-        <!--android:id="@+id/tv_letter_overlay"-->
-        <!--android:layout_width="120dp"-->
-        <!--android:layout_height="120dp"-->
-        <!--android:gravity="center"-->
-        <!--android:layout_centerInParent="true"-->
-        <!--android:background="@drawable/cp_overlay_bg"-->
-        <!--android:textSize="48sp"-->
-        <!--android:textStyle="bold"-->
-        <!--android:textColor="@android:color/white"-->
-        <!--android:visibility="gone"/>-->
-
-    <!--<com.example.jiao.cityapplication.SideLetterBar-->
-        <!--android:id="@+id/side_letter_bar"-->
-        <!--android:layout_width="@dimen/side_letter_bar_width"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--tools:ignore="RtlHardcoded" />-->
 
     <com.example.jiao.cityapplication.IndexBar.IndexBar
         android:id="@+id/indexBar"

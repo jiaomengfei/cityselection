@@ -1,10 +1,12 @@
-package com.example.jiao.cityapplication;
+package utils;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.example.jiao.cityapplication.bean.CityColumns;
 
 
 public class SQLiteHelper extends SQLiteOpenHelper {

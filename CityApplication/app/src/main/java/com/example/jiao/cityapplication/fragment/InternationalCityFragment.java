@@ -1,4 +1,4 @@
-package com.example.jiao.cityapplication;
+package com.example.jiao.cityapplication.fragment;
 
 
 import android.content.Intent;
@@ -18,13 +18,26 @@ import android.widget.TextView;
 import com.example.jiao.cityapplication.IndexBar.BaseIndexPinyinBean;
 import com.example.jiao.cityapplication.IndexBar.IndexBar;
 import com.example.jiao.cityapplication.IndexBar.SuspensionDecoration;
+import com.example.jiao.cityapplication.adapter.OnItemClickListener;
+import com.example.jiao.cityapplication.R;
+import com.example.jiao.cityapplication.adapter.ViewHolder;
+import com.example.jiao.cityapplication.adapter.CityAdapter;
+import com.example.jiao.cityapplication.adapter.CommonAdapter;
+import com.example.jiao.cityapplication.bean.CityBean;
+import com.example.jiao.cityapplication.bean.CityHeaderBean;
+import com.example.jiao.cityapplication.bean.CityJsonBean;
+import com.example.jiao.cityapplication.view.DividerItemDecoration;
+import com.example.jiao.cityapplication.view.HeaderRecyclerAndFooterWrapperAdapter;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import utils.DataUtil;
+import utils.ReadFromAssets;
+
 import static android.app.Activity.RESULT_OK;
-import static com.example.jiao.cityapplication.MainActivity.KEY_PICKED_CITY;
+import static com.example.jiao.cityapplication.activity.MainActivity.KEY_PICKED_CITY;
 
 
 public class InternationalCityFragment extends Fragment {
@@ -154,7 +167,7 @@ public class InternationalCityFragment extends Fragment {
     }
 
     private void getDatas() {
-        String cityDatas=ReadFromAssets.ReadJsonFile("foreign.json",getActivity());
+        String cityDatas= ReadFromAssets.ReadJsonFile("foreign.json",getActivity());
         ArrayList<CityJsonBean> arrayList=  DataUtil.jsonToArrayList(cityDatas,CityJsonBean.class);
         initDatas(arrayList);
     }

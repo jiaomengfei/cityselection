@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context="com.example.jiao.cityapplication.FirstActivity">
+    tools:context="com.example.jiao.cityapplication.activity.FirstActivity">
     <Button
         android:text="选择城市"
         android:id="@+id/city_choice"
