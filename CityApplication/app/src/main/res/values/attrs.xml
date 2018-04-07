@@ -2,9 +2,50 @@
 <resources>
 
     <attr name="indexBarTextSize" format="dimension" />
-
     <declare-styleable name="IndexBar">
         <attr name="indexBarTextSize" />
         <attr name="indexBarPressBackground" format="color" />
     </declare-styleable>
+
+    <attr name="borderRadius" format="dimension" />
+    <attr name="type">
+        <enum name="circle" value="0" />
+        <enum name="round" value="1" />
+    </attr>
+    <declare-styleable name="RoundImageViewByXfermode">
+        <attr name="borderRadius" />
+        <attr name="type" />
+    </declare-styleable>
+    <declare-styleable name="RoundImageView">
+        <attr name="borderRadius" />
+        <attr name="type" />
+    </declare-styleable>
+
+    <!-- 设置TitleBar控件自定义属性 -->
+    <declare-styleable name="BaseTitleBar">
+        <!-- 返回按钮右侧文字 -->
+        <attr name="baseTitle" format="string" />
+        <attr name="baseMainTitle" format="string" />
+        <!-- 是否展示中间主标题 -->
+        <attr name="isBaseMainTitleShow" format="boolean" />
+        <!--是否展示返回按钮-->
+        <attr name="isBaseBackIconShow" format="boolean" />
+        <!--是否展示返回按钮右侧文字-->
+        <attr name="isBaseTitleShow" format="boolean" />
+
+
+        <!--字体颜色-->
+        <attr name="baseTextColor" format="color" />
+
+        <!--标题栏背景颜色-->
+        <attr name="baseBgColor" format="color" />
+
+        <!--是否展示返回按钮-->
+        <attr name="isBasePhoneShow" format="boolean" />
+
+        <!--是否展示返回按钮-->
+        <attr name="isBaseYPShow" format="boolean" />
+
+    </declare-styleable>
+
 </resources>

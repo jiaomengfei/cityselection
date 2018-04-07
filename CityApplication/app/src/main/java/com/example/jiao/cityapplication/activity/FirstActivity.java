@@ -1,6 +1,7 @@
 package com.example.jiao.cityapplication.activity;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.jiao.cityapplication.R;
 import com.example.jiao.cityapplication.ZBeanCity;
+import com.example.jiao.cityapplication.view.BaseTitleBar;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,18 +24,20 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
     private TextView mDisplay;
     private static final int REQUEST_CODE_PICK_CITY = 112;
     public Realm myRealm = Realm.getDefaultInstance();
-    private Button mSearch;
-
+    private Button mView;
+    private BaseTitleBar mCommonTitleBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
         mButton = (Button) findViewById(R.id.city_choice);
-        mSearch = (Button) findViewById(R.id.city_search);
+        mView = (Button) findViewById(R.id.view_display);
         mDisplay = (TextView) findViewById(R.id.city_display);
         mButton.setOnClickListener(this);
-        mSearch.setOnClickListener(this);
+        mView.setOnClickListener(this);
+        mCommonTitleBar = (BaseTitleBar) findViewById(R.id.ctbar);
+        //initTitleBar();
         Boolean is = DataUtil.getDatabaseConfig(this);
         if (!is) {
             createDatabase();
@@ -41,7 +45,33 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+    private void initTitleBar() {
+
+        mCommonTitleBar.setMainTitle("自定义view");
+        mCommonTitleBar.setSubMainTitle("自定义view");
+        setDefaultLogo();
+    }
+
+    private void setDefaultLogo() {
+        InputStream inputStream = null;
+        try {
+            inputStream = this.getAssets().open("icon_sms_default.png");
+            mCommonTitleBar.setLogo(BitmapFactory.decodeStream(inputStream));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     private void createDatabase() {
+
         myRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -58,9 +88,18 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivityForResult(intent,
-                REQUEST_CODE_PICK_CITY);
+        switch (v.getId()){
+            case R.id.city_choice:
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivityForResult(intent,
+                        REQUEST_CODE_PICK_CITY);
+                break;
+            case R.id.view_display:
+                Intent intent1 = new Intent(this, ViewActivity.class);
+                startActivity(intent1);
+                break;
+        }
+
     }
 
     @Override

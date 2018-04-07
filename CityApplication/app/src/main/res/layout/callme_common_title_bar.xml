@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true" >
+	
+    <LinearLayout
+        android:id="@+id/callme_title_bar_container"
+        android:layout_width="wrap_content"
+        android:minWidth="100dp"
+        android:layout_height="55dp"
+        android:layout_alignParentLeft="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/callme_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="19dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/callme_back_arrow" />
+
+        <TextView
+            android:id="@+id/callme_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_toRightOf="@+id/callme_title_bar_container"
+        android:layout_toLeftOf="@+id/callme_goto"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/callme_main_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:maxEms="18"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/callme_sub_main_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+             android:maxEms="18"
+            android:singleLine="true"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/callme_goto"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical|right"
+        android:layout_marginRight="10.0dip"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/callme_phone"
+        android:visibility="invisible"
+        android:src="@drawable/unioncast_yellow_page" />
+
+    <ImageView
+        android:id="@+id/callme_phone"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical|right"
+        android:layout_marginRight="10.0dip"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/uniocast_menu_call_new" />
+
+</RelativeLayout>

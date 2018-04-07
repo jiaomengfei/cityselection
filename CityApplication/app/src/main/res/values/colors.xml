@@ -14,4 +14,6 @@
     <color name="cp_alpha_gray">#CC646464</color>
     <color name="cp_theme_gray">#646464</color>
     <color name="color_blue_0888ff">#0888ff</color>
+    <color name="callme_green_top" >#73cc27</color>
+    <color name="color_cccccc">#cccccc</color>
 </resources>
