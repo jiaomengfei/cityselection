@@ -16,4 +16,7 @@
     <color name="color_blue_0888ff">#0888ff</color>
     <color name="callme_green_top" >#73cc27</color>
     <color name="color_cccccc">#cccccc</color>
+    <color name="gray_normal">#666667</color>
+    <color name="emojicon_tab_selected">#D9D9D9</color>
+    <color name="emojicon_tab_nomal">#ffffff</color>
 </resources>

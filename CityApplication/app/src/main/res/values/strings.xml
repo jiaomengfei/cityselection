@@ -3,4 +3,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="attach_take_pic">拍照</string>
+    <string name="button_send">发送</string>
+    <string name="attach_picture">图片</string>
+    <string name="send_diamond">送砖石</string>
+    <string name="sd_card_does_not_exist">SD卡不存在，不能拍照</string>
 </resources>

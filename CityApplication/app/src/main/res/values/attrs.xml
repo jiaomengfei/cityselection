@@ -47,5 +47,11 @@
         <attr name="isBaseYPShow" format="boolean" />
 
     </declare-styleable>
-
+    <declare-styleable name="ChatExtendMenu">
+        <attr name="numColumns" format="integer"/>
+    </declare-styleable>
+    <declare-styleable name="EmojiconMenu">
+        <attr name="bigEmojiconRows" format="integer"/>
+        <attr name="emojiconColumns" format="integer"/>
+    </declare-styleable>
 </resources>
