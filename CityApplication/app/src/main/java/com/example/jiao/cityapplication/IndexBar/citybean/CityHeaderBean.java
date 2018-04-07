@@ -1,4 +1,4 @@
-package com.example.jiao.cityapplication.bean;
+package com.example.jiao.cityapplication.IndexBar.citybean;
 
 
 import com.example.jiao.cityapplication.IndexBar.BaseIndexPinyinBean;

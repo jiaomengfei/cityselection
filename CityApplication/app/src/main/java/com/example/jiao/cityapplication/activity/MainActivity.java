@@ -22,9 +22,8 @@ import android.widget.TextView;
 import com.example.jiao.cityapplication.fragment.ChinessCityFragment;
 import com.example.jiao.cityapplication.fragment.InternationalCityFragment;
 import com.example.jiao.cityapplication.R;
-import com.example.jiao.cityapplication.adapter.CityFragmentAdapter;
-import com.example.jiao.cityapplication.bean.CityJsonBean;
-import com.example.jiao.cityapplication.view.SearchPopupwindow;
+import com.example.jiao.cityapplication.IndexBar.adapter.CityFragmentAdapter;
+import com.example.jiao.cityapplication.IndexBar.citybean.CityJsonBean;
 
 import java.util.ArrayList;
 

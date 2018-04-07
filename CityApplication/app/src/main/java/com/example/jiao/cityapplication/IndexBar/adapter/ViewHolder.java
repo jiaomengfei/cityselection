@@ -1,4 +1,4 @@
-package com.example.jiao.cityapplication.adapter;
+package com.example.jiao.cityapplication.IndexBar.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

@@ -2,7 +2,7 @@ package utils;
 
 import android.support.v4.util.LruCache;
 
-import com.example.jiao.cityapplication.bean.CityBean;
+import com.example.jiao.cityapplication.IndexBar.citybean.CityBean;
 
 import java.util.List;
 

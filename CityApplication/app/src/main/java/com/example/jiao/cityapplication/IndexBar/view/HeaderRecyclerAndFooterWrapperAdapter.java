@@ -1,4 +1,4 @@
-package com.example.jiao.cityapplication.view;
+package com.example.jiao.cityapplication.IndexBar.view;
 
 import android.support.v4.util.SparseArrayCompat;
 import android.support.v7.widget.GridLayoutManager;
@@ -7,7 +7,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.jiao.cityapplication.adapter.ViewHolder;
+import com.example.jiao.cityapplication.IndexBar.adapter.ViewHolder;
 
 /**
  * 介绍：一个给RecyclerView添加HeaderView FooterView的装饰Adapter类

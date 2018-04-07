@@ -1,4 +1,4 @@
-package com.example.jiao.cityapplication.adapter;
+package com.example.jiao.cityapplication.IndexBar.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

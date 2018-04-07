@@ -1,9 +1,9 @@
-package com.example.jiao.cityapplication.adapter;
+package com.example.jiao.cityapplication.IndexBar.adapter;
 
 import android.content.Context;
 
 import com.example.jiao.cityapplication.R;
-import com.example.jiao.cityapplication.bean.CityBean;
+import com.example.jiao.cityapplication.IndexBar.citybean.CityBean;
 
 import java.util.List;
 

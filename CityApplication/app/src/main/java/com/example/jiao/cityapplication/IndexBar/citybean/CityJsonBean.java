@@ -1,4 +1,4 @@
-package com.example.jiao.cityapplication.bean;
+package com.example.jiao.cityapplication.IndexBar.citybean;
 
 import android.os.Parcelable;
 

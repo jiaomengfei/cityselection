@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.jiao.cityapplication.bean.CityColumns;
+import com.example.jiao.cityapplication.IndexBar.citybean.CityColumns;
 
 
 public class SQLiteHelper extends SQLiteOpenHelper {
