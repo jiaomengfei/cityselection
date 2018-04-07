@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -108,22 +107,7 @@ public class ChatInputMenu extends LinearLayout {
     public void init(){
         init(null);
     }
-    
-    /**
-     * set custom emojicon menu
-     * @param customEmojiconMenu
-     */
-    public void setCustomEmojiconMenu(EmojiconMenuBase customEmojiconMenu){
-        this.emojiconMenu = customEmojiconMenu;
-    }
-    
-    /**
-     * set custom primary menu
-     * @param customPrimaryMenu
-     */
-    public void setCustomPrimaryMenu(ChatPrimaryMenuBase customPrimaryMenu){
-        this.chatPrimaryMenu = customPrimaryMenu;
-    }
+
     
     public ChatPrimaryMenuBase getPrimaryMenu(){
         return chatPrimaryMenu;
@@ -135,40 +119,6 @@ public class ChatInputMenu extends LinearLayout {
     
     public EmojiconMenuBase getEmojiconMenu(){
         return emojiconMenu;
-    }
-    
-
-    /**
-     * register menu item
-     * 
-     * @param name
-     *            item name
-     * @param drawableRes
-     *            background of item
-     * @param itemId
-     *             id
-     * @param listener
-     *            on click event of item
-     */
-    public void registerExtendMenuItem(String name, int drawableRes, int itemId,
-                                       ChatExtendMenu.EaseChatExtendMenuItemClickListener listener) {
-        chatExtendMenu.registerMenuItem(name, drawableRes, itemId, listener);
-    }
-
-    /**
-     * register menu item
-     * 
-     *            resource id of item name
-     * @param drawableRes
-     *            background of item
-     * @param itemId
-     *             id
-     * @param listener
-     *            on click event of item
-     */
-    public void registerExtendMenuItem(int nameRes, int drawableRes, int itemId,
-                                       ChatExtendMenu.EaseChatExtendMenuItemClickListener listener) {
-        chatExtendMenu.registerMenuItem(nameRes, drawableRes, itemId, listener);
     }
 
 
@@ -182,10 +132,6 @@ public class ChatInputMenu extends LinearLayout {
                     listener.onSendMessage(content);
             }
 
-            @Override
-            public void onToggleVoiceBtnClicked() {
-                hideExtendMenuContainer();
-            }
 
             @Override
             public void onToggleExtendClicked() {
@@ -203,13 +149,6 @@ public class ChatInputMenu extends LinearLayout {
             }
 
 
-            @Override
-            public boolean onPressToSpeakBtnTouch(View v, MotionEvent event) {
-                if(listener != null){
-                    return listener.onPressToSpeakBtnTouch(v, event);
-                }
-                return false;
-            }
         });
 
         // emojicon menu
@@ -350,13 +289,6 @@ public class ChatInputMenu extends LinearLayout {
          */
         void onBigExpressionClicked(Emojicon emojicon);
 
-        /**
-         * when speak button is touched
-         * @param v
-         * @param event
-         * @return
-         */
-        boolean onPressToSpeakBtnTouch(View v, MotionEvent event);
     }
     
 }

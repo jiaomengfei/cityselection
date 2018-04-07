@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -20,24 +19,40 @@ import com.example.jiao.cityapplication.chatview.view.ChatInputMenu;
 
 import java.io.File;
 
+import static com.example.jiao.cityapplication.chatview.view.ChatExtendMenu.ITEM_DIAMOND;
+import static com.example.jiao.cityapplication.chatview.view.ChatExtendMenu.ITEM_PICTURE;
+import static com.example.jiao.cityapplication.chatview.view.ChatExtendMenu.ITEM_TAKE_PICTURE;
+
 public class ViewActivity extends AppCompatActivity {
-    static final int ITEM_TAKE_PICTURE = 1;
-    static final int ITEM_PICTURE = 2;
-    static final int ITEM_DIAMOND = 3;
-    protected int[] itemStrings = {R.string.attach_picture, R.string.attach_take_pic, R.string.send_diamond};
-    protected int[] itemdrawables = {R.drawable.chat_image_selector, R.drawable.chat_takepic_selector,
-            R.drawable.chat_location_selector};
-    protected int[] itemIds = {ITEM_PICTURE, ITEM_TAKE_PICTURE, ITEM_DIAMOND};
-    private ExtendMenuItemClickListener extendMenuItemClickListener;
+
     private ChatInputMenu inputMenu;
+    private ChatExtendMenu chatExtendMenu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view);
         inputMenu = (ChatInputMenu) findViewById(R.id.input_menu);
+        chatExtendMenu = (ChatExtendMenu) findViewById(R.id.extend_menu);
         inputMenu.init(null);
-        extendMenuItemClickListener = new ExtendMenuItemClickListener();
-        registerExtendMenuItem();
+        chatExtendMenu.setChatExtendMenuItemClickListener(new ChatExtendMenu.ChatExtendMenuItemClickListener() {
+            @Override
+            public void onClick(int itemId, View view) {
+                switch (itemId) {
+                    case ITEM_TAKE_PICTURE:
+                        ChatUtils.selectPicFromCamera(ViewActivity.this);
+                        break;
+                    case ITEM_PICTURE:
+                        ChatUtils.selectPicFromLocal(ViewActivity.this);
+                        break;
+                    case ITEM_DIAMOND:
+                        Toast.makeText(ViewActivity.this, "送砖石", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
         inputMenu.setChatInputMenuListener(new ChatInputMenu.ChatInputMenuListener() {
             @Override
             public void onSendMessage(String content) {
@@ -49,18 +64,9 @@ public class ViewActivity extends AppCompatActivity {
 
             }
 
-            @Override
-            public boolean onPressToSpeakBtnTouch(View v, MotionEvent event) {
-                return false;
-            }
         });
     }
 
-    private void registerExtendMenuItem() {
-        for (int i = 0; i < itemStrings.length; i++) {
-            inputMenu.registerExtendMenuItem(itemStrings[i], itemdrawables[i], itemIds[i], extendMenuItemClickListener);
-        }
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -90,7 +96,6 @@ public class ViewActivity extends AppCompatActivity {
             }
         }
     }
-
     /**
      * 压缩图片回调
      */
@@ -124,29 +129,5 @@ public class ViewActivity extends AppCompatActivity {
         }
     }
 
-
-    /**
-     * handle the click event for extend menu
-     */
-    class ExtendMenuItemClickListener implements ChatExtendMenu.EaseChatExtendMenuItemClickListener {
-
-        @Override
-        public void onClick(int itemId, View view) {
-            switch (itemId) {
-                case ITEM_TAKE_PICTURE:
-                    ChatUtils.selectPicFromCamera(ViewActivity.this);
-                    break;
-                case ITEM_PICTURE:
-                    ChatUtils.selectPicFromLocal(ViewActivity.this);
-                    break;
-                case ITEM_DIAMOND:
-                    Toast.makeText(ViewActivity.this, "送砖石", Toast.LENGTH_SHORT).show();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-    }
 
 }

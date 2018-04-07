@@ -85,18 +85,7 @@ public abstract class ChatPrimaryMenuBase extends RelativeLayout {
          * @param content
          */
         void onSendBtnClicked(String content);
-        
-        /**
-         * when speak button is touched
-         * @return
-         */
-        boolean onPressToSpeakBtnTouch(View v, MotionEvent event);
-        
-        /**
-         * toggle on/off voice button
-         */
-        void onToggleVoiceBtnClicked();
-        
+
         /**
          * toggle on/off extend menu
          */

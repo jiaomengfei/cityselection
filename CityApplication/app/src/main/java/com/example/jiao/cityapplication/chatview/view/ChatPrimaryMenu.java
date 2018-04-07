@@ -125,14 +125,7 @@ public class ChatPrimaryMenu extends ChatPrimaryMenuBase implements OnClickListe
 
         
     }
-    
-    /**
-     * set recorder view when speak icon is touched
-     * @param voiceRecorderView
-     */
-//    public void setPressToSpeakRecorderView(EaseVoiceRecorderView voiceRecorderView){
-//        EaseVoiceRecorderView voiceRecorderView1 = voiceRecorderView;
-//    }
+
 
     /**
      * append emoji icon to editText
@@ -166,7 +159,6 @@ public class ChatPrimaryMenu extends ChatPrimaryMenuBase implements OnClickListe
                 listener.onSendBtnClicked(s);
             }
         }else if (id == R.id.btn_more) {
-            //buttonSetModeVoice.setVisibility(View.VISIBLE);
             edittext_layout.setVisibility(View.VISIBLE);
             showNormalFaceImage();
             if(listener != null)
@@ -185,20 +177,7 @@ public class ChatPrimaryMenu extends ChatPrimaryMenuBase implements OnClickListe
         }
     }
     
-    
-    /**
-     * show voice icon when speak bar is touched
-     * 
-     */
-    protected void setModeVoice() {
-        hideKeyboard();
-        edittext_layout.setVisibility(View.GONE);
-        buttonSend.setVisibility(View.GONE);
-        buttonMore.setVisibility(View.VISIBLE);
-        faceNormal.setVisibility(View.VISIBLE);
-        faceChecked.setVisibility(View.INVISIBLE);
 
-    }
 
     /**
      * show keyboard

@@ -29,7 +29,14 @@ public class ChatExtendMenu extends GridView {
 
     protected Context context;
     private List<ChatMenuItemModel> itemModels = new ArrayList<ChatMenuItemModel>();
-
+    public static final int ITEM_TAKE_PICTURE = 1;
+    public static final int ITEM_PICTURE = 2;
+    public static final int ITEM_DIAMOND = 3;
+    protected int[] itemStrings = {R.string.attach_picture, R.string.attach_take_pic, R.string.send_diamond};
+    protected int[] itemdrawables = {R.drawable.chat_image_selector, R.drawable.chat_takepic_selector,
+            R.drawable.chat_location_selector};
+    protected int[] itemIds = {ITEM_PICTURE, ITEM_TAKE_PICTURE, ITEM_DIAMOND};
+    public ChatExtendMenuItemClickListener listener;
     public ChatExtendMenu(Context context, AttributeSet attrs, int defStyle) {
         this(context, attrs);
     }
@@ -60,7 +67,14 @@ public class ChatExtendMenu extends GridView {
      * init
      */
     public void init(){
+        registerExtendMenuItem();
         setAdapter(new ItemAdapter(context, itemModels));
+    }
+
+    private void registerExtendMenuItem() {
+        for (int i = 0; i < itemStrings.length; i++) {
+            registerMenuItem(itemStrings[i], itemdrawables[i], itemIds[i]);
+        }
     }
 
     /**
@@ -72,15 +86,13 @@ public class ChatExtendMenu extends GridView {
      *            background of item
      * @param itemId
      *             id
-     * @param listener
      *            on click event of item
      */
-    public void registerMenuItem(String name, int drawableRes, int itemId, EaseChatExtendMenuItemClickListener listener) {
+    public void registerMenuItem(String name, int drawableRes, int itemId) {
         ChatMenuItemModel item = new ChatMenuItemModel();
         item.name = name;
         item.image = drawableRes;
         item.id = itemId;
-        item.clickListener = listener;
         itemModels.add(item);
     }
     
@@ -93,11 +105,10 @@ public class ChatExtendMenu extends GridView {
      *            background of item
      * @param itemId
      *             id
-     * @param listener
      *             on click event of item
      */
-    public void registerMenuItem(int nameRes, int drawableRes, int itemId, EaseChatExtendMenuItemClickListener listener) {
-        registerMenuItem(context.getString(nameRes), drawableRes, itemId, listener);
+    public void registerMenuItem(int nameRes, int drawableRes, int itemId) {
+        registerMenuItem(context.getString(nameRes), drawableRes, itemId);
     }
     
     
@@ -124,8 +135,8 @@ public class ChatExtendMenu extends GridView {
                 
                 @Override
                 public void onClick(View v) {
-                    if(getItem(position).clickListener != null){
-                        getItem(position).clickListener.onClick(getItem(position).id, v);
+                    if(listener != null){
+                        listener.onClick(getItem(position).id, v);
                     }
                 }
             });
@@ -136,16 +147,18 @@ public class ChatExtendMenu extends GridView {
     }
     
     
-    public interface EaseChatExtendMenuItemClickListener{
+    public interface ChatExtendMenuItemClickListener {
         void onClick(int itemId, View view);
     }
-    
+
+    public void setChatExtendMenuItemClickListener(ChatExtendMenuItemClickListener listener) {
+        this.listener = listener;
+    }
     
     class ChatMenuItemModel{
         String name;
         int image;
         int id;
-        EaseChatExtendMenuItemClickListener clickListener;
     }
     
     class ChatMenuItem extends LinearLayout {
