@@ -30,6 +30,7 @@ import com.example.jiao.cityapplication.IndexBar.citybean.CityHeaderBean;
 import com.example.jiao.cityapplication.IndexBar.view.DividerItemDecoration;
 import com.example.jiao.cityapplication.IndexBar.view.HeaderRecyclerAndFooterWrapperAdapter;
 
+import com.example.jiao.cityapplication.activity.MainActivity;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -40,8 +41,6 @@ import io.realm.RealmResults;
 import utils.DataUtil;
 
 import static android.app.Activity.RESULT_OK;
-import static com.example.jiao.cityapplication.activity.MainActivity.KEY_PICKED_CITY;
-
 
 public class ChinessCityFragment extends Fragment {
 
@@ -212,7 +211,7 @@ public class ChinessCityFragment extends Fragment {
 
     private void backWithData(String city){
         Intent data = new Intent();
-        data.putExtra(KEY_PICKED_CITY, city);
+        data.putExtra(MainActivity.Companion.getKEY_PICKED_CITY(), city);
         getActivity().setResult(RESULT_OK, data);
         getActivity().finish();
     }
